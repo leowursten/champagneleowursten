@@ -2,21 +2,16 @@
 % Please edit documentation in R/radius_fun.R
 \name{S}
 \alias{S}
-\title{Smooth easing function for glass profile}
+\title{Easing function S(t) on \link{0, 1}}
 \usage{
 S(t)
 }
 \arguments{
-\item{t}{Numeric value between 0 and 1.}
+\item{t}{Numeric in \link{0, 1}.}
 }
 \value{
-A numeric value between 0 and 1.
+Numeric, smoothed value between 0 and 1.
 }
 \description{
-Helper function S(z) used to smooth transitions in the radius profile.
-}
-\examples{
-S(0)
-S(0.5)
-S(1)
+Easing function S(t) on \link{0, 1}
 }

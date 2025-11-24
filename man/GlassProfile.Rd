@@ -2,20 +2,28 @@
 % Please edit documentation in R/glass.R
 \name{GlassProfile}
 \alias{GlassProfile}
-\title{Create a Glass Profile object}
+\title{Create a champagne glass profile}
 \usage{
 GlassProfile(a, b, x_1, x_2, x_3, x_4, r_foot, r_stem, r_bowl, r_rim)
 }
 \arguments{
-\item{a, b}{Numeric, lower and upper integration bounds (cm).}
+\item{a, b}{Numeric lower and upper levels where champagne is considered.}
 
-\item{x_1, x_2, x_3, x_4}{Breakpoints of the radius profile.}
+\item{x_1, x_2, x_3, x_4}{Breakpoints along the glass axis.}
 
-\item{r_foot, r_stem, r_bowl, r_rim}{Radii of the different parts of the glass.}
+\item{r_foot, r_stem, r_bowl, r_rim}{Radii (in cm) for foot, stem, bowl and rim.}
 }
 \value{
-An object of class Glass_Profile.
+An object of class \code{"Glass_Profile"}.
 }
 \description{
-Minimal S3 class storing geometry of the champagne glass.
+Constructor for objects of class \code{Glass_Profile},
+storing geometry parameters of the champagne glass.
+}
+\examples{
+glass <- GlassProfile(
+  a = 12.6, b = 22.5,
+  x_1 = 1.1, x_2 = 12.6, x_3 = 18.8, x_4 = 22.5,
+  r_foot = 5.8, r_stem = 0.25, r_bowl = 7.5, r_rim = 7
+)
 }

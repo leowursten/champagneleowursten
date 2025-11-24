@@ -20,6 +20,7 @@
 #' simulate_party("Paris", weather_df, glass)
 #' }
 #'
+#' @importFrom stats rnorm rpois integrate
 #' @export
 simulate_party <- function(city_name,
                            data,

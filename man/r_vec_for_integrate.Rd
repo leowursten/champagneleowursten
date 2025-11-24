@@ -2,25 +2,18 @@
 % Please edit documentation in R/radius_fun.R
 \name{r_vec_for_integrate}
 \alias{r_vec_for_integrate}
-\title{Vectorized wrapper of r() for integration}
+\title{Vectorised wrapper for integrate()}
 \usage{
-r_vec_for_integrate(t, ...)
+r_vec_for_integrate(t, x)
 }
 \arguments{
-\item{t}{Numeric vector of heights.}
+\item{t}{Numeric vector of positions.}
 
-\item{...}{Passed to r().}
+\item{x}{A Glass_Profile object.}
 }
 \value{
 Numeric vector of radii.
 }
 \description{
-Adapts r() to work with integrate(), which passes vector t.
-}
-\examples{
-r_vec_for_integrate(
-  c(10, 11),
-  x_1 = 1, x_2 = 5, x_3 = 10, x_4 = 15,
-  r_foot = 5, r_stem = 1, r_bowl = 6, r_rim = 5
-)
+Vectorised wrapper for integrate()
 }

@@ -2,26 +2,20 @@
 % Please edit documentation in R/radius_fun.R
 \name{r}
 \alias{r}
-\title{Radius profile of the champagne glass}
+\title{Piecewise radius function for the champagne glass}
 \usage{
 r(t, x_1, x_2, x_3, x_4, r_foot, r_stem, r_bowl, r_rim)
 }
 \arguments{
-\item{t}{Position along the vertical axis (cm).}
+\item{t}{Position along the horizontal axis.}
 
-\item{x_1, x_2, x_3, x_4}{Breakpoints (cm) that define foot, stem, bowl and rim transitions.}
+\item{x_1, x_2, x_3, x_4}{Breakpoints.}
 
-\item{r_foot, r_stem, r_bowl, r_rim}{Radii (cm) at foot, stem, bowl and rim.}
+\item{r_foot, r_stem, r_bowl, r_rim}{Radii of the different parts (cm).}
 }
 \value{
-Radius at height t (cm).
+Radius at position t (cm).
 }
 \description{
-Piecewise radius function r(t) defining the shape of the glass.
-}
-\examples{
-r(10,
-  x_1 = 1, x_2 = 5, x_3 = 10, x_4 = 15,
-  r_foot = 5, r_stem = 1, r_bowl = 6, r_rim = 5
-)
+Piecewise radius function for the champagne glass
 }

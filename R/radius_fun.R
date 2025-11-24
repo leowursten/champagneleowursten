@@ -1,28 +1,21 @@
-#' @title Smooth easing function for glass profile
-#' @description Helper function S(z) used to smooth transitions in the radius profile.
-#' @param t Numeric value between 0 and 1.
-#' @return A numeric value between 0 and 1.
-#' @examples
-#' S(0)
-#' S(0.5)
-#' S(1)
+#' Easing function S(t) on [0, 1]
+#'
+#' @param t Numeric in [0, 1].
+#' @return Numeric, smoothed value between 0 and 1.
 #' @export
 S <- function(t) 0.5 - 0.5 * cos(pi * t)
 
-#' @title Radius profile of the champagne glass
-#' @description Piecewise radius function r(t) defining the shape of the glass.
-#' @param t Position along the vertical axis (cm).
-#' @param x_1,x_2,x_3,x_4 Breakpoints (cm) that define foot, stem, bowl and rim transitions.
-#' @param r_foot,r_stem,r_bowl,r_rim Radii (cm) at foot, stem, bowl and rim.
-#' @return Radius at height t (cm).
-#' @examples
-#' r(10,
-#'   x_1 = 1, x_2 = 5, x_3 = 10, x_4 = 15,
-#'   r_foot = 5, r_stem = 1, r_bowl = 6, r_rim = 5
-#' )
+#' Piecewise radius function for the champagne glass
+#'
+#' @param t Position along the horizontal axis.
+#' @param x_1,x_2,x_3,x_4 Breakpoints.
+#' @param r_foot,r_stem,r_bowl,r_rim Radii of the different parts (cm).
+#' @return Radius at position t (cm).
 #' @export
 r <- function(t, x_1, x_2, x_3, x_4,
               r_foot, r_stem, r_bowl, r_rim) {
+
+  # 🔑 IMPORTANT : forcer t à être scalaire
   t <- t[1]
 
   if (t < 0) {
@@ -32,10 +25,12 @@ r <- function(t, x_1, x_2, x_3, x_4,
   } else if (t < x_2) {
     return(r_stem)
   } else if (t < x_3) {
+    # transition lisse stem -> bowl
     z <- (t - x_2) / (x_3 - x_2)
     s <- S(z)
     return(r_stem * (1 - s) + r_bowl * s)
   } else if (t <= x_4) {
+    # transition lisse bowl -> rim, via S^2
     z <- (t - x_3) / (x_4 - x_3)
     s <- S(z)
     s2 <- s^2
@@ -45,18 +40,22 @@ r <- function(t, x_1, x_2, x_3, x_4,
   }
 }
 
-#' @title Vectorized wrapper of r() for integration
-#' @description Adapts r() to work with integrate(), which passes vector t.
-#' @param t Numeric vector of heights.
-#' @param ... Passed to r().
+#' Vectorised wrapper for integrate()
+#'
+#' @param t Numeric vector of positions.
+#' @param x A Glass_Profile object.
 #' @return Numeric vector of radii.
-#' @examples
-#' r_vec_for_integrate(
-#'   c(10, 11),
-#'   x_1 = 1, x_2 = 5, x_3 = 10, x_4 = 15,
-#'   r_foot = 5, r_stem = 1, r_bowl = 6, r_rim = 5
-#' )
 #' @export
-r_vec_for_integrate <- function(t, ...) {
-  vapply(t, r, numeric(1), ...)
+r_vec_for_integrate <- function(t, x) {
+  vapply(
+    t,
+    function(tt) {
+      r(
+        tt,
+        x$x_1, x$x_2, x$x_3, x$x_4,
+        x$r_foot, x$r_stem, x$r_bowl, x$r_rim
+      )
+    },
+    numeric(1)
+  )
 }
