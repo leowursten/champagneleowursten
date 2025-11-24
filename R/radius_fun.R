@@ -1,7 +1,10 @@
-#' Easing function S(t) on [0, 1]
+#' Smooth easing function S
 #'
-#' @param t Numeric in [0, 1].
-#' @return Numeric, smoothed value between 0 and 1.
+#' This function implements a cosine-based easing that smoothly goes
+#' from 0 to 1 as t increases from 0 to 1.
+#'
+#' @param t Numeric scalar, typically between 0 and 1.
+#' @return Numeric scalar between 0 and 1.
 #' @export
 S <- function(t) 0.5 - 0.5 * cos(pi * t)
 
@@ -15,7 +18,7 @@ S <- function(t) 0.5 - 0.5 * cos(pi * t)
 r <- function(t, x_1, x_2, x_3, x_4,
               r_foot, r_stem, r_bowl, r_rim) {
 
-  # 🔑 IMPORTANT : forcer t à être scalaire
+  # force t to be scalar
   t <- t[1]
 
   if (t < 0) {
@@ -25,12 +28,12 @@ r <- function(t, x_1, x_2, x_3, x_4,
   } else if (t < x_2) {
     return(r_stem)
   } else if (t < x_3) {
-    # transition lisse stem -> bowl
+    # smooth transition stem -> bowl
     z <- (t - x_2) / (x_3 - x_2)
     s <- S(z)
     return(r_stem * (1 - s) + r_bowl * s)
   } else if (t <= x_4) {
-    # transition lisse bowl -> rim, via S^2
+    # smooth transition bowl -> rim, via S^2
     z <- (t - x_3) / (x_4 - x_3)
     s <- S(z)
     s2 <- s^2

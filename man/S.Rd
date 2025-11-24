@@ -2,16 +2,17 @@
 % Please edit documentation in R/radius_fun.R
 \name{S}
 \alias{S}
-\title{Easing function S(t) on \link{0, 1}}
+\title{Smooth easing function S}
 \usage{
 S(t)
 }
 \arguments{
-\item{t}{Numeric in \link{0, 1}.}
+\item{t}{Numeric scalar, typically between 0 and 1.}
 }
 \value{
-Numeric, smoothed value between 0 and 1.
+Numeric scalar between 0 and 1.
 }
 \description{
-Easing function S(t) on \link{0, 1}
+This function implements a cosine-based easing that smoothly goes
+from 0 to 1 as t increases from 0 to 1.
 }

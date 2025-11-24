@@ -43,7 +43,7 @@ print.City_Weather <- function(x, ...) {
     cat("No complete weather data available for", x$city, "\n")
   } else {
     cat("Weather in", x$city, "\n")
-    cat("  Temperature:", x$temperature, "°C\n")
+    cat("  Temperature:", x$temperature, "\u00b0C\n")
     cat("  Humidity   :", x$humidity, "%\n")
     cat("  Pressure   :", x$pressure, "hPa\n")
   }
