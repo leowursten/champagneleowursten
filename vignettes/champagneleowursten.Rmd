@@ -1,0 +1,108 @@
+---
+title: "Using the champagneleowursten package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using the champagneleowursten package}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+library(champagneleowursten)
+```
+
+# Introduction
+
+This vignette shows how to use **champagneleowursten** to:
+
+-   define a champagne glass profile,
+
+-   use processed weather data for cities,
+
+-   compute the expected number of guests,
+
+-   simulate several parties and estimate how many bottles are needed.
+
+# Glass profile 
+
+```{r}
+glass <- GlassProfile(
+  a = 12.6, b = 22.5,
+  x_1 = 1.1, x_2 = 12.6, x_3 = 18.8, x_4 = 22.5,
+  r_foot = 5.8, r_stem = 0.25, r_bowl = 7.5, r_rim = 7
+)
+
+radius_cone(glass, 14)          # radius at typical fill level
+volume_between(glass) / 1000    # volume in litres
+```
+
+# Weather data and expected guests 
+
+# 
+
+The package ships a processed dataset processed_data built from OpenWeather JSON.
+
+```{r}
+data("processed_data")
+head(processed_data)
+```
+
+Pick one city and build a CityWeather object :
+
+```{r}
+paris_row <- subset(processed_data, city == "Paris")[1, ]
+
+cw <- CityWeather(
+  city        = paris_row$city,
+  temperature = paris_row$temperature,
+  humidity    = paris_row$humidity,
+  pressure    = paris_row$pressure
+)
+
+cw
+lambda <- expected_lambda(cw)
+lambda
+```
+
+# Simulating Parties 
+
+We now simulate multiple parties in this city, given the glass shapes and weather-based lambda.
+
+```{r}
+set.seed(123)
+res <- simulate_party(
+  city_name = "Paris",
+  data      = processed_data,
+  glass     = glass,
+  N         = 200
+)
+
+head(res)
+summary(res$liters)
+summary(res$bottles)
+```
+
+You can also make simple plots:
+
+```{r}
+hist(res$bottles, breaks = 10,
+     main = "Distribution of bottles used",
+     xlab = "Number of bottles")
+
+boxplot(res$liters,
+        main = "Distribution of total liters per party",
+        ylab = "Liters")
+```
+
+Si ça marche sans erreur, voir la vignette depuis :
+
+```{r}
+browseVignettes("champagneleowursten")
+```
