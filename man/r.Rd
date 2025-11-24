@@ -20,6 +20,8 @@ Radius at height t (cm).
 Piecewise radius function r(t) defining the shape of the glass.
 }
 \examples{
-r(10, x_1 = 1, x_2 = 5, x_3 = 10, x_4 = 15,
-  r_foot = 5, r_stem = 1, r_bowl = 6, r_rim = 5)
+r(10,
+  x_1 = 1, x_2 = 5, x_3 = 10, x_4 = 15,
+  r_foot = 5, r_stem = 1, r_bowl = 6, r_rim = 5
+)
 }

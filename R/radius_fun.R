@@ -16,12 +16,13 @@ S <- function(t) 0.5 - 0.5 * cos(pi * t)
 #' @param r_foot,r_stem,r_bowl,r_rim Radii (cm) at foot, stem, bowl and rim.
 #' @return Radius at height t (cm).
 #' @examples
-#' r(10, x_1 = 1, x_2 = 5, x_3 = 10, x_4 = 15,
-#'   r_foot = 5, r_stem = 1, r_bowl = 6, r_rim = 5)
+#' r(10,
+#'   x_1 = 1, x_2 = 5, x_3 = 10, x_4 = 15,
+#'   r_foot = 5, r_stem = 1, r_bowl = 6, r_rim = 5
+#' )
 #' @export
 r <- function(t, x_1, x_2, x_3, x_4,
               r_foot, r_stem, r_bowl, r_rim) {
-  # scalar-only: take first value if vector is passed by mistake
   t <- t[1]
 
   if (t < 0) {
@@ -31,13 +32,11 @@ r <- function(t, x_1, x_2, x_3, x_4,
   } else if (t < x_2) {
     return(r_stem)
   } else if (t < x_3) {
-    # smooth transition stem -> bowl
-    z <- (t - x_2) / (x_3 - x_2)   # rescale to [0,1]
+    z <- (t - x_2) / (x_3 - x_2)
     s <- S(z)
     return(r_stem * (1 - s) + r_bowl * s)
   } else if (t <= x_4) {
-    # smooth transition bowl -> rim, using S^2
-    z <- (t - x_3) / (x_4 - x_3)   # rescale to [0,1]
+    z <- (t - x_3) / (x_4 - x_3)
     s <- S(z)
     s2 <- s^2
     return(r_bowl * (1 - s2) + r_rim * s2)
@@ -52,9 +51,11 @@ r <- function(t, x_1, x_2, x_3, x_4,
 #' @param ... Passed to r().
 #' @return Numeric vector of radii.
 #' @examples
-#' r_vec_for_integrate(c(10, 11),
+#' r_vec_for_integrate(
+#'   c(10, 11),
 #'   x_1 = 1, x_2 = 5, x_3 = 10, x_4 = 15,
-#'   r_foot = 5, r_stem = 1, r_bowl = 6, r_rim = 5)
+#'   r_foot = 5, r_stem = 1, r_bowl = 6, r_rim = 5
+#' )
 #' @export
 r_vec_for_integrate <- function(t, ...) {
   vapply(t, r, numeric(1), ...)

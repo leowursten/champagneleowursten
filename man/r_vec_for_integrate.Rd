@@ -18,7 +18,9 @@ Numeric vector of radii.
 Adapts r() to work with integrate(), which passes vector t.
 }
 \examples{
-r_vec_for_integrate(c(10, 11),
+r_vec_for_integrate(
+  c(10, 11),
   x_1 = 1, x_2 = 5, x_3 = 10, x_4 = 15,
-  r_foot = 5, r_stem = 1, r_bowl = 6, r_rim = 5)
+  r_foot = 5, r_stem = 1, r_bowl = 6, r_rim = 5
+)
 }
